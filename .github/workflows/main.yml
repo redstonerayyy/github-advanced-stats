@@ -1,4 +1,4 @@
-name: Generate Language Statistic
+name: Generate Language Statistics
 
 on:
   push:
@@ -18,18 +18,9 @@ jobs:
     # Check out repository under $GITHUB_WORKSPACE, so the job can access it
     - uses: actions/checkout@v3
 
-    # Run using NodeJS 
-    # - uses: actions/setup-node@v3
-    #   with:
-    #     node-version: latest
-    #     cache: 'npm'
-
     # Generate all statistics images
     - name: Generate images
       run: |
-        ls
-        pwd
-        cd $GITHUB_WORKSPACE
         npm start
 
     # Commit all changed files to the repository
