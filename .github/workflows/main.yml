@@ -27,6 +27,9 @@ jobs:
     # Generate all statistics images
     - name: Generate images
       run: |
+        ls
+        pwd
+        cd $GITHUB_WORKSPACE
         npm start
 
     # Commit all changed files to the repository
