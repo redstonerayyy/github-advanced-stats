@@ -4,7 +4,15 @@ import * as os from "os";
 import * as path from "path";
 import * as child_process from "child_process";
 
-const username = "Redstonerayy";
+// read config and info
+let config = fs.readFileSync("./config.json", { encoding: "utf8" });
+config = JSON.parse(config);
+
+const ignored_repos = config.ignored_repos.map(
+    (reponame) => `https://github.com/${config.username}/${reponame}`
+);
+
+const username = config.username;
 
 // fetch repository tab webpage
 var webpage = "";
@@ -32,6 +40,9 @@ const reporegex = /<ahref="([A-Za-z:/.-]*)"itemprop="namecodeRepository">/g;
 
 let array = [...webpage.matchAll(reporegex)];
 let repos = array.map((match) => "https://github.com" + match[1]);
+
+// remove ignored repos
+repos = repos.filter((repo) => !ignored_repos.includes(repo));
 
 // create or update local copy of all public repositories in ~/.cache/repo-lang-crawler/
 const syncdir = path.join(os.homedir(), ".cache", "repo-lang-crawler");
@@ -71,6 +82,7 @@ const languages = {
     ".asm": "Assembly",
     ".bat": "Batchfile",
     ".c": "C",
+    ".h": "C",
     ".cpp": "C++",
     ".hpp": "C++",
     ".cmake": "CMake",
@@ -86,10 +98,10 @@ const languages = {
     ".php": "PHP",
     ".hs": "Haskell",
     ".json": "JSON",
-    ".jsx": "JSX",
     ".java": "Java",
+    ".jsx": "JavaScript",
     ".js": "JavaScript",
-    ".mjs": "Javascript Module",
+    ".mjs": "Javascript",
     ".jl": "Julia",
     ".ipynb": "Jupyter Notebook",
     ".kt": "Kotlin",
@@ -114,7 +126,7 @@ const languages = {
     ".bib": "TeX",
     ".txt": "Text",
     ".ts": "TypeScript",
-    ".tsx": "TSX",
+    ".tsx": "TypeScript",
     ".vim": "Vim",
     ".vb": "Visual Basic",
     ".yml": "YAML",
@@ -141,10 +153,11 @@ let globalstats = {
     roundbrackets: 0,
     semicolons: 0,
     codelines: 0,
+    languages: {},
 };
 
 async function analyserepo(repopath) {
-    let languages = {};
+    let langs = {};
     let stats = {
         curlybrackets: 0,
         squarebrackets: 0,
@@ -161,10 +174,10 @@ async function analyserepo(repopath) {
                     lines = lines.map((line) => line.trim());
                     lines = lines.filter((line) => line != "");
                     // add linecount
-                    if (Object.hasOwn(languages, path.extname(entrypath))) {
-                        languages[path.extname(entrypath)] += lines.length;
+                    if (Object.hasOwn(langs, path.extname(entrypath))) {
+                        langs[path.extname(entrypath)] += lines.length;
                     } else {
-                        languages[path.extname(entrypath)] = lines.length;
+                        langs[path.extname(entrypath)] = lines.length;
                     }
                     // get stats
                     let full = lines.join("");
@@ -182,21 +195,18 @@ async function analyserepo(repopath) {
     await Promise.all(promises);
     // calculate linecount
     // add to global
-    for (const key of Object.keys(languages)) {
-        stats.codelines += languages[key];
-        if (Object.hasOwn(globalstats, key)) {
-            globalstats[key] += languages[key];
+    for (const key of Object.keys(langs)) {
+        stats.codelines += langs[key];
+        if (Object.hasOwn(globalstats.languages, key)) {
+            globalstats.languages[key] += langs[key];
         } else {
-            globalstats[key] = languages[key];
+            globalstats.languages[key] = langs[key];
         }
     }
 
     for (const key of Object.keys(stats)) {
         globalstats[key] += stats[key];
     }
-
-    // print repo info
-    console.log(path.basename(repopath), languages, stats);
 }
 
 let repopromises = [];
@@ -206,4 +216,108 @@ for (const rpath of repopaths) {
 
 await Promise.all(repopromises);
 
-console.log(globalstats);
+// generate images
+
+const colors = {
+    Assembly: "#56223B",
+    Batchfile: "Batchfile",
+    C: "#404552",
+    "C++": "#2E2292",
+    CMake: "CMake",
+    CSS: "#264EE4",
+    CSV: "CSV",
+    OpenCL: "OpenCL",
+    Dockerfile: "Dockerfile",
+    GLSL: "GLSL",
+    Go: "#6AD7E5",
+    Gradle: "Gradle",
+    Groovy: "Groovy",
+    HTML: "#F0652A",
+    PHP: "#767BB3",
+    Haskell: "Haskell",
+    JSON: "JSON",
+    Javascript: "#FFD73D",
+    Java: "#FF9710",
+    Julia: "Julia",
+    "Jupyter Notebook": "#3E7CAB",
+    Kotlin: "#D6697E",
+    Lua: "Lua",
+    Markdown: "Markdown",
+    Matlab: "Matlab",
+    Nginx: "Nginx",
+    Powershell: "#4372CA",
+    Python: "#3E7CAB",
+    Rust: "#000000",
+    Ruby: "#AB1401",
+    SCSS: "SCSS",
+    SVG: "#f77518",
+    SASS: "Sass",
+    Scala: "#DB322F",
+    Shell: "#2C3137",
+    Swift: "#F05038",
+    TOML: "TOML",
+    TeX: "#008080",
+    Text: "#9fa0a3",
+    TypeScript: "#3178C6",
+    Vim: "Vim",
+    "Visual Basic": "Visual Basic",
+    YAML: "YAML",
+    YAML: "YAML",
+};
+
+// merge file endings
+let mergedlangs = {};
+
+for (const key of Object.keys(globalstats.languages)) {
+    if (Object.hasOwn(mergedlangs, languages[key])) {
+        mergedlangs[languages[key]] += globalstats.languages[key];
+    } else {
+        mergedlangs[languages[key]] = globalstats.languages[key];
+    }
+}
+
+// remove unwantet languages
+globalstats.codelines -= mergedlangs["C"];
+delete mergedlangs.C;
+
+// sort languages
+let sortlangs = Object.entries(mergedlangs);
+sortlangs.sort((a, b) => a[1] - b[1]);
+sortlangs.reverse();
+
+// load template
+let template = fs.readFileSync("./templates/languages.svg", {
+    encoding: "utf8",
+});
+
+// add langs
+let progress = "";
+let lang_list = "";
+
+for (const lang of sortlangs) {
+    let color = colors[lang[0]] !== undefined ? colors[lang[0]] : "#000000";
+
+    console.log(lang, ((lang[1] / globalstats.codelines) * 100).toFixed(2));
+    progress += `
+    <span style="background-color: ${color}; 
+    width: ${((lang[1] / globalstats.codelines) * 100).toFixed(2)}%;" 
+    class="progress-item"></span>
+    `;
+
+    lang_list += `
+    <li style="animation-delay: 0ms;">
+    <svg xmlns="http://www.w3.org/2000/svg" class="octicon" style="fill:${color};"
+    viewBox="0 0 16 16" version="1.1" width="16" height="16"><path
+    fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+    <span class="lang">${lang[0]}</span>
+    <span class="percent">${((lang[1] / globalstats.codelines) * 100).toFixed(
+        2
+    )}%</span>
+    </li>
+    `;
+}
+
+template = template.replace("{{ progress }}", progress);
+template = template.replace("{{ lang_list }}", lang_list);
+
+fs.writeFileSync("./output/languages.svg", template);
