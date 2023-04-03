@@ -74,7 +74,6 @@ const languages = {
     ".cpp": "C++",
     ".hpp": "C++",
     ".cmake": "CMake",
-    ".cpy": "COBOL",
     ".css": "CSS",
     ".csv": "CSV",
     ".cl": "OpenCL",
@@ -114,9 +113,9 @@ const languages = {
     ".tex": "TeX",
     ".bib": "TeX",
     ".txt": "Text",
-    ".ts": "typescript",
-    ".tsx": "typescriptreact",
-    ".vim": "VimL",
+    ".ts": "TypeScript",
+    ".tsx": "TSX",
+    ".vim": "Vim",
     ".vb": "Visual Basic",
     ".yml": "YAML",
     ".yaml": "YAML",
@@ -136,15 +135,22 @@ async function* walk(dir) {
     }
 }
 
-repopaths = [repopaths[1]];
+let globalstats = {
+    curlybrackets: 0,
+    squarebrackets: 0,
+    roundbrackets: 0,
+    semicolons: 0,
+    codelines: 0,
+};
 
-repopaths.forEach(async (repopath) => {
+async function analyserepo(repopath) {
     let languages = {};
     let stats = {
         curlybrackets: 0,
         squarebrackets: 0,
         roundbrackets: 0,
         semicolons: 0,
+        codelines: 0,
     };
     let promises = [];
     for await (const entrypath of walk(repopath)) {
@@ -174,6 +180,30 @@ repopaths.forEach(async (repopath) => {
     }
 
     await Promise.all(promises);
-    console.log(languages);
-    console.log(stats);
-});
+    // calculate linecount
+    // add to global
+    for (const key of Object.keys(languages)) {
+        stats.codelines += languages[key];
+        if (Object.hasOwn(globalstats, key)) {
+            globalstats[key] += languages[key];
+        } else {
+            globalstats[key] = languages[key];
+        }
+    }
+
+    for (const key of Object.keys(stats)) {
+        globalstats[key] += stats[key];
+    }
+
+    // print repo info
+    console.log(path.basename(repopath), languages, stats);
+}
+
+let repopromises = [];
+for (const rpath of repopaths) {
+    repopromises.push(analyserepo(rpath));
+}
+
+await Promise.all(repopromises);
+
+console.log(globalstats);
