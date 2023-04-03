@@ -1,0 +1,40 @@
+name: Generate Language Statistic
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check out repository under $GITHUB_WORKSPACE, so the job can access it
+    - uses: actions/checkout@v3
+
+    # Run using NodeJS 
+    - uses: actions/setup-node@v3
+      with:
+        node-version: latest
+        cache: 'npm'
+
+    # Generate all statistics images
+    - name: Generate images
+      run: |
+        npm start
+
+    # Commit all changed files to the repository
+    - name: Commit to the repo
+      run: |
+        git config --global user.name "jstrieb/github-stats"
+        git config --global user.email "github-stats[bot]@jstrieb.github.io"
+        git add .
+        # Force the build to succeed, even if no files were changed
+        git commit -m 'Update generated files' || true
+        git push
