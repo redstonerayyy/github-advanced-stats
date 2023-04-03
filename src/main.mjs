@@ -54,123 +54,126 @@ repopaths.forEach((repopath) => {
             cwd: repopath,
         });
     } else {
-        child_process.execSync(`git clone ${repo}`, { cwd: syncdir });
+        child_process.execSync(
+            `git clone https://github.com/${username}/${path.basename(
+                repopath
+            )}`,
+            {
+                cwd: syncdir,
+            }
+        );
     }
 });
 
 // analyse the code in the repositories by file extension
 // not all but many programming languages, can be added with pull requests
 const languages = {
-    asm: "Assembly",
-    bat: "Batchfile",
-    c: "C",
-    cpp: "C++",
-    hpp: "C++",
-    cmake: "CMake",
-    cpy: "COBOL",
-    css: "CSS",
-    csv: "CSV",
-    cl: "OpenCL",
-    dockerfile: "Dockerfile",
-    glsl: "GLSL",
-    go: "Go",
-    gradle: "Gradle",
-    groovy: "Groovy",
-    html: "HTML",
-    php: "PHP",
-    hs: "Haskell",
-    json: "JSON",
-    jsx: "JSX",
-    java: "Java",
-    js: "JavaScript",
-    jl: "Julia",
-    ipynb: "Jupyter Notebook",
-    kt: "Kotlin",
-    lua: "Lua",
-    md: "Markdown",
-    matlab: "Matlab",
-    nginxconf: "Nginx",
-    ps1: "PowerShell",
-    py: "Python",
-    rs: "Rust",
-    rb: "Ruby",
-    scss: "SCSS",
-    svg: "SVG",
-    sass: "Sass",
-    scala: "Scala",
-    sh: "Shell",
-    bash: "Shell",
-    zsh: "Shell",
-    swift: "Swift",
-    toml: "TOML",
-    tex: "TeX",
-    bib: "TeX",
-    txt: "Text",
-    ts: "typescript",
-    tsx: "typescriptreact",
-    vim: "VimL",
-    vb: "Visual Basic",
-    yml: "YAML",
-    yaml: "YAML",
+    ".asm": "Assembly",
+    ".bat": "Batchfile",
+    ".c": "C",
+    ".cpp": "C++",
+    ".hpp": "C++",
+    ".cmake": "CMake",
+    ".cpy": "COBOL",
+    ".css": "CSS",
+    ".csv": "CSV",
+    ".cl": "OpenCL",
+    ".dockerfile": "Dockerfile",
+    ".glsl": "GLSL",
+    ".go": "Go",
+    ".gradle": "Gradle",
+    ".groovy": "Groovy",
+    ".html": "HTML",
+    ".php": "PHP",
+    ".hs": "Haskell",
+    ".json": "JSON",
+    ".jsx": "JSX",
+    ".java": "Java",
+    ".js": "JavaScript",
+    ".mjs": "Javascript Module",
+    ".jl": "Julia",
+    ".ipynb": "Jupyter Notebook",
+    ".kt": "Kotlin",
+    ".lua": "Lua",
+    ".md": "Markdown",
+    ".matlab": "Matlab",
+    ".nginxconf": "Nginx",
+    ".ps1": "PowerShell",
+    ".py": "Python",
+    ".rs": "Rust",
+    ".rb": "Ruby",
+    ".scss": "SCSS",
+    ".svg": "SVG",
+    ".sass": "Sass",
+    ".scala": "Scala",
+    ".sh": "Shell",
+    ".bash": "Shell",
+    ".zsh": "Shell",
+    ".swift": "Swift",
+    ".toml": "TOML",
+    ".tex": "TeX",
+    ".bib": "TeX",
+    ".txt": "Text",
+    ".ts": "typescript",
+    ".tsx": "typescriptreact",
+    ".vim": "VimL",
+    ".vb": "Visual Basic",
+    ".yml": "YAML",
+    ".yaml": "YAML",
 };
 
 // search for these extensions
 const extensions = Object.keys(languages);
 
 // walk each git repository recursively
-// look for gitignores first
 // nice walk function https://gist.github.com/lovasoa/8691344
 
 async function* walk(dir) {
     for await (const d of await fs.promises.opendir(dir)) {
         const entry = path.join(dir, d.name);
-        if (d.isDirectory()) yield* walk(entry);
+        if (d.isDirectory() && !d.name.includes(".git")) yield* walk(entry);
         else if (d.isFile()) yield entry;
-    }
-}
-
-function isignored(checkpath, ignorepaths) {
-    // https://git-scm.com/docs/gitignore consider reading this
-    for (const ipath of ignorepaths) {
-    }
-}
-
-async function walkrepository(dir, ignorepaths) {
-    for await (const d of await fs.promises.opendir(dir)) {
-        const entrypath = path.join(dir, d.name);
-        if (d.isDirectory()) {
-            if (!ignorepaths.includes(entrypath)) {
-            }
-        } else {
-            if (!isignored(entrypath, ignorepaths)) {
-            }
-        }
     }
 }
 
 repopaths = [repopaths[1]];
 
 repopaths.forEach(async (repopath) => {
-    // check for all gitignores
-    let ignorepaths = [];
+    let languages = {};
+    let stats = {
+        curlybrackets: 0,
+        squarebrackets: 0,
+        roundbrackets: 0,
+        semicolons: 0,
+    };
+    let promises = [];
     for await (const entrypath of walk(repopath)) {
-        if (entrypath.includes(".gitignore")) {
-            fs.promises.readFile(entrypath).then((buffer) => {
-                let lines = ("" + buffer).split("\n");
-                lines = lines.map((line) => line.trim());
-                lines = lines.filter((line) => line[0] != "#");
-                lines = lines.filter((line) => line != "");
-                for (const line of lines) {
-                    console.log(line);
-                    let ignorepath = path.join(path.dirname(entrypath), line);
-                    if (!ignorepaths.includes(ignorepath)) {
-                        ignorepaths.push(ignorepath);
+        if (extensions.includes(path.extname(entrypath))) {
+            promises.push(
+                fs.promises.readFile(entrypath).then((buffer) => {
+                    let lines = ("" + buffer).split("\n");
+                    lines = lines.map((line) => line.trim());
+                    lines = lines.filter((line) => line != "");
+                    // add linecount
+                    if (Object.hasOwn(languages, path.extname(entrypath))) {
+                        languages[path.extname(entrypath)] += lines.length;
+                    } else {
+                        languages[path.extname(entrypath)] = lines.length;
                     }
-                }
-            });
+                    // get stats
+                    let full = lines.join("");
+                    stats.curlybrackets += (full.match(/[{}]/g) || []).length;
+                    stats.squarebrackets += (
+                        full.match(/[\[\]]/g) || []
+                    ).length;
+                    stats.roundbrackets += (full.match(/[\(\)]/g) || []).length;
+                    stats.semicolons += (full.match(/[;]/g) || []).length;
+                })
+            );
         }
     }
-    console.log(ignorepaths);
-    // recursively check files in the repository
-    walkrepository(repopath, ignorepaths);
+
+    await Promise.all(promises);
+    console.log(languages);
+    console.log(stats);
 });
