@@ -142,7 +142,7 @@ div.ellipsis {
     class="progress-item"></span>
     
     <span style="background-color: #008080; 
-    width: 13.53%;" 
+    width: 13.54%;" 
     class="progress-item"></span>
     
     <span style="background-color: #F0652A; 
@@ -162,7 +162,7 @@ div.ellipsis {
     class="progress-item"></span>
     
     <span style="background-color: Markdown; 
-    width: 2.47%;" 
+    width: 2.46%;" 
     class="progress-item"></span>
     
     <span style="background-color: #000000; 
@@ -248,7 +248,7 @@ div.ellipsis {
     viewBox="0 0 16 16" version="1.1" width="16" height="16"><path
     fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
     <span class="lang">TeX</span>
-    <span class="percent">13.53%</span>
+    <span class="percent">13.54%</span>
     </li>
     
     <li style="animation-delay: 0ms;">
@@ -288,7 +288,7 @@ div.ellipsis {
     viewBox="0 0 16 16" version="1.1" width="16" height="16"><path
     fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
     <span class="lang">Markdown</span>
-    <span class="percent">2.47%</span>
+    <span class="percent">2.46%</span>
     </li>
     
     <li style="animation-delay: 0ms;">
