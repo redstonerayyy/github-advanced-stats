@@ -8,34 +8,39 @@ const endpoint = "https://api.github.com/graphql";
 const query = `
 query {
     rateLimit {
-      cost
-      remaining
-      resetAt    
+        cost
+        remaining
+        resetAt    
     }
     repository(owner:"Redstonerayy", name: "minecraft") {
-      collaborators {
-        totalCount
-      }
-    	forkCount
-    	isFork
-    	isArchived
-    	stargazerCount
-    	watchers {
-    	  totalCount
-    	}
-      issues {
-        totalCount
-      }
-      
-    	issuesopen: issues(states:OPEN) {
-        totalCount
-      } 
-    	pullrequestsopen: pullRequests(states:OPEN) {
-        totalCount
-      }
-      issuesclosed: issues(states:CLOSED) {
-        totalCount
-      }
+        forkCount
+        isFork
+        isArchived
+        stargazerCount
+        
+        collaborators {
+            totalCount
+        }
+        
+        watchers {
+            totalCount
+        }
+        
+        issues {
+            totalCount
+        }
+        
+        issuesopen: issues(states:OPEN) {
+            totalCount
+        } 
+        
+        pullrequestsopen: pullRequests(states:OPEN) {
+            totalCount
+        }
+
+        issuesclosed: issues(states:CLOSED) {
+            totalCount
+        }
     }
-  }
+}
 `;
