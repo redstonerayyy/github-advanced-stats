@@ -1,1 +1,5 @@
+# dependencies
 /node_modules
+
+# your secrets e.g. Github API Key
+.env

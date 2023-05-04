@@ -1,64 +1,48 @@
 // query stats from github using the graphql api
 // you need to specify a valid access token for this
-// to work either in a local .ENV file or as a secret
+// to work either in a local .env file or as a secret
 // for your repository
 
 import { graphql } from "@octokit/graphql";
 
-const q = `
-query {
+const QUERY = `
+query userinf($username: String!) {
     rateLimit {
         cost
         remaining
         limit
-        resetAt    
+        resetAt
     }
-    repository(owner:"Redstonerayy", name: "minecraft") {
-        forkCount
-        isFork
-        isArchived
-        stargazerCount
-        
-        collaborators {
+    user(login: $username) {
+        followers {
             totalCount
         }
-        
-        watchers {
+        following {
             totalCount
         }
-        
-        issues {
+        gists {
             totalCount
         }
-        
-        issuesopen: issues(states:OPEN) {
-            totalCount
-        } 
-        
-        pullrequestsopen: pullRequests(states:OPEN) {
+        organizations {
             totalCount
         }
-        
-        issuesclosed: issues(states:CLOSED) {
+        projects {
+            totalCount
+        }
+        repositories {
             totalCount
         }
     }
 }
 `;
 
-export default async function accountstats(username) {
-	const { repository } = await graphql(
-		`
-			query {
-				user(login: "Redstonerayy") {
-					followers {
-						totalCount
-					}
-				}
-			}
-		`
-	);
-	console.log(repository);
+export default async function accountstats(username, token) {
+	const info = await graphql(QUERY, {
+		username: username,
+		headers: {
+			authorization: `bearer ${token}`,
+		},
+	});
+	console.log(info);
+	return info;
 }
-
-await accountstats();
