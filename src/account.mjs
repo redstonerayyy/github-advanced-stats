@@ -3,13 +3,14 @@
 // to work either in a local .ENV file or as a secret
 // for your repository
 
-const endpoint = "https://api.github.com/graphql";
+import { graphql } from "@octokit/graphql";
 
-const query = `
+const q = `
 query {
     rateLimit {
         cost
         remaining
+        limit
         resetAt    
     }
     repository(owner:"Redstonerayy", name: "minecraft") {
@@ -37,10 +38,27 @@ query {
         pullrequestsopen: pullRequests(states:OPEN) {
             totalCount
         }
-
+        
         issuesclosed: issues(states:CLOSED) {
             totalCount
         }
     }
 }
 `;
+
+export default async function accountstats(username) {
+	const { repository } = await graphql(
+		`
+			query {
+				user(login: "Redstonerayy") {
+					followers {
+						totalCount
+					}
+				}
+			}
+		`
+	);
+	console.log(repository);
+}
+
+await accountstats();
