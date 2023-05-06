@@ -87,7 +87,6 @@ div.ellipsis {
   overflow: hidden;
   background-color: rgb(225, 228, 232);
   border-radius: 6px;
-  outline: 1px solid transparent;
   margin-bottom: 1em;
 }
 
