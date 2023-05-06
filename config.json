@@ -1,10 +1,10 @@
 {
-    "username": "Redstonerayy",
-    "ignored_repos": ["github-stats", "Redstonerayy"],
-    "ignored_languages": [],
-    "ignored_folders": {
-        "minecraft": ["lib"],
-        "raynder": ["glad"],
-        "global": [".idea", ".vscode"]
-    }
+	"username": "Redstonerayy",
+	"ignored_repos": ["github-stats", "Redstonerayy"],
+	"ignored_languages": ["SVG", "HTML", "TeX", "Text", "Markdown", "JSON"],
+	"ignored_folders": {
+		"minecraft": ["lib"],
+		"raynder": ["glad"],
+		"global": [".idea", ".vscode"]
+	}
 }

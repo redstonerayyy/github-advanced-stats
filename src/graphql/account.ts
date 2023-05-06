@@ -36,7 +36,7 @@ query userinf($username: String!) {
 }
 `;
 
-export default async function accountstats(username, token) {
+export default async function accountstats(username: string, token: string) {
 	const info = await graphql(QUERY, {
 		username: username,
 		headers: {

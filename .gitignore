@@ -3,3 +3,10 @@
 
 # your secrets e.g. Github API Key
 .env
+
+# output
+/dist
+
+# editors
+/.vscode
+/.idea
