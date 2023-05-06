@@ -1,10 +1,12 @@
 {
 	"username": "Redstonerayy",
+	"clone": true,
 	"ignored_repos": ["github-stats", "Redstonerayy"],
 	"ignored_languages": ["SVG", "HTML", "TeX", "Text", "Markdown", "JSON"],
 	"ignored_folders": {
 		"minecraft": ["lib"],
 		"raynder": ["glad"],
 		"global": [".idea", ".vscode"]
-	}
+	},
+	"user": true
 }

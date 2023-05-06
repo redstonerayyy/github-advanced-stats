@@ -2,9 +2,11 @@
 
 export interface Config {
 	username: string;
+	clone: boolean;
 	ignored_repos: Array<string>;
 	ignored_languages: Array<string>;
 	ignored_folders: { [key: string]: Array<string> };
+	user: boolean;
 }
 
 /*------------ read config.json ------------*/

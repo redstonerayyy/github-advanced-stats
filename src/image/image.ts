@@ -1,24 +1,23 @@
-// take the stats for all repositories
-// transform them to an array, sort them and
-// generate svg files
-// more versions in different svg colors should be added
+/*------------ generate svg files ------------*/
+// more versions in different svg colors could be added
 
 import * as fs from "fs";
 import { colors } from "../languages.js";
 
-export default function generatesvgs(languagestats: { [key: string]: any }) {
-	// sort languages by linecount so the most used are on the left
+/*------------ generate language percentages as bar with description ------------*/
+export function generatelangsvgs(languagestats: { [key: string]: any }) {
+	/*------------ sort languages by linecount so the most used are first the left ------------*/
 	let languagesasarray: Array<{ [key: string]: any }> = Object.entries(
 		languagestats.statsbylanguage
 	).map((lang) => lang[1]);
 	languagesasarray.sort((a, b) => b.linecount - a.linecount);
 
-	// load svg template
+	/*------------ load svg template ------------*/
 	let template = fs.readFileSync("./templates/languages.svg", {
 		encoding: "utf8",
 	});
 
-	// construct html strings for the svg
+	/*------------ construct html strings ------------*/
 	// adds html elements for each language
 	// images may only be shown correctly inside a browser
 	let progressstring = "";
@@ -57,4 +56,40 @@ export default function generatesvgs(languagestats: { [key: string]: any }) {
 
 	// write the file
 	fs.writeFileSync("./output/languages.svg", template);
+}
+
+/*------------ generate advanced user info ------------*/
+export function generateusersvgs(
+	graphqlstats: { [key: string]: any },
+	reststats: { [key: string]: any }
+) {
+	/*------------ load svg template ------------*/
+	let template = fs.readFileSync("./templates/userinfo.svg", {
+		encoding: "utf8",
+	});
+
+	/*------------ rest ------------*/
+	const lineschanged = reststats.additions + reststats.deletions;
+
+	/*------------ replace info in template ------------*/
+	// https://stackoverflow.com/questions/2901102/how-to-format-a-number-with-commas-as-thousands-separators
+	template = template.replace("{{ name }}", graphqlstats.username);
+	template = template.replace("{{ stars }}", graphqlstats.stars.toString());
+	template = template.replace("{{ forks }}", graphqlstats.forks.toString());
+	template = template.replace(
+		"{{ contributions }}",
+		graphqlstats.commitcount.toString()
+	);
+	template = template.replace(
+		"{{ lines_changed }}",
+		lineschanged.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+	);
+	template = template.replace("{{ views }}", reststats.views.toString());
+	template = template.replace(
+		"{{ repos }}",
+		graphqlstats.reporecentcontribs.toString()
+	);
+
+	// write the file
+	fs.writeFileSync("./output/userinfo.svg", template);
 }

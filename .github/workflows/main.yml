@@ -1,34 +1,36 @@
 name: Generate Language Statistics
 
 on:
-  push:
-    branches: [ master ]
-  schedule:
-    - cron: "5 0 * * *"
-  workflow_dispatch:
+    push:
+        branches: [master]
+    schedule:
+        - cron: "5 0 * * *"
+    workflow_dispatch:
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-    # Check out repository under $GITHUB_WORKSPACE, so the job can access it
-    - uses: actions/checkout@v3
+        steps:
+            # Check out repository under $GITHUB_WORKSPACE, so the job can access it
+            - uses: actions/checkout@v3
 
-    # Generate all statistics images
-    - name: Generate images
-      run: |
-        npm start
+            # Generate all statistics images
+            - name: Generate images
+              run: |
+                  yarn install
+                  yarn build
+                  yarn start
 
-    # Commit all changed files to the repository
-    - name: Commit to the repo
-      run: |
-        git config --global user.name "Redstonerayy/github-language-stats"
-        git config --global user.email "github-language-stats[bot]@redstonerayy.github.io"
-        git add .
-        # Force the build to succeed, even if no files were changed
-        git commit -m 'Update generated files' || true
-        git push
+            # Commit all changed files to the repository
+            - name: Commit to the repo
+              run: |
+                  git config --global user.name "github-advanced-stats"
+                  git config --global user.email "@Redstonerayy"
+                  git add .
+                  # Force the build to succeed, even if no files were changed
+                  git commit -m 'Update generated files' || true
+                  git push

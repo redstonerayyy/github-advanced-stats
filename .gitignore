@@ -1,6 +1,9 @@
 # dependencies
 /node_modules
 
+# yarn
+*.log
+
 # your secrets e.g. Github API Key
 .env
 
