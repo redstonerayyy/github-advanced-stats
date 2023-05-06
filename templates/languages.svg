@@ -99,10 +99,6 @@ div.ellipsis {
   border-collapse: collapse;
 }
 
-#gh-dark-mode-only:target .progress-item {
-  outline: 2px solid #393f47;
-}
-
 .lang {
   font-weight: 600;
   margin-right: 4px;
