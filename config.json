@@ -1,7 +1,7 @@
 {
 	"username": "Redstonerayy",
 	"clone": true,
-	"ignored_repos": ["github-stats", "Redstonerayy"],
+	"ignored_repos": ["Redstonerayy", "flayr"],
 	"ignored_languages": ["SVG", "HTML", "TeX", "Text", "Markdown", "JSON"],
 	"ignored_folders": {
 		"minecraft": ["lib"],
