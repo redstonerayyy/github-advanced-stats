@@ -128,15 +128,15 @@ div.ellipsis {
 <span class="progress">
 
         <span style="background-color: #3E7CAB; 
-        width: 41.44%;" 
+        width: 41.42%;" 
         class="progress-item"></span>
         
         <span style="background-color: #0f206d; 
-        width: 35.12%;" 
+        width: 35.10%;" 
         class="progress-item"></span>
         
         <span style="background-color: #3178C6; 
-        width: 12.41%;" 
+        width: 12.40%;" 
         class="progress-item"></span>
         
         <span style="background-color: #FFD73D; 
@@ -152,7 +152,7 @@ div.ellipsis {
         class="progress-item"></span>
         
         <span style="background-color: #000000; 
-        width: 1.08%;" 
+        width: 1.11%;" 
         class="progress-item"></span>
         
         <span style="background-color: #6AD7E5; 
@@ -184,7 +184,7 @@ div.ellipsis {
         class="progress-item"></span>
         
         <span style="background-color: #2C3137; 
-        width: 0.24%;" 
+        width: 0.25%;" 
         class="progress-item"></span>
         
         <span style="background-color: #000000; 
@@ -202,7 +202,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">Python</span>
-        <span class="percent">41.44%</span>
+        <span class="percent">41.42%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -210,7 +210,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">C++</span>
-        <span class="percent">35.12%</span>
+        <span class="percent">35.10%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -218,7 +218,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">TypeScript</span>
-        <span class="percent">12.41%</span>
+        <span class="percent">12.40%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -250,7 +250,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">YAML</span>
-        <span class="percent">1.08%</span>
+        <span class="percent">1.11%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -314,7 +314,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">Shell</span>
-        <span class="percent">0.24%</span>
+        <span class="percent">0.25%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
