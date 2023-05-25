@@ -140,7 +140,7 @@ div.ellipsis {
         class="progress-item"></span>
         
         <span style="background-color: #FFD73D; 
-        width: 2.58%;" 
+        width: 2.56%;" 
         class="progress-item"></span>
         
         <span style="background-color: #000000; 
@@ -176,7 +176,7 @@ div.ellipsis {
         class="progress-item"></span>
         
         <span style="background-color: #264EE4; 
-        width: 0.37%;" 
+        width: 0.41%;" 
         class="progress-item"></span>
         
         <span style="background-color: #000000; 
@@ -226,7 +226,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">JavaScript</span>
-        <span class="percent">2.58%</span>
+        <span class="percent">2.56%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -298,7 +298,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">CSS</span>
-        <span class="percent">0.37%</span>
+        <span class="percent">0.41%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
