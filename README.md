@@ -1,9 +1,6 @@
 # Github Language Stats
 
-Using this dependency free NodeJS project you can analyse your Github repositories regarding the used programming languages.
-It works by cloning all your repositories and then analysing each file.
-Because of this, it doesn't use the Github API, but cloning your repositories can take time, especially if they are large.
-It can be run locally with NodeJS or on Github Actions.
+Using this NodeJS project you can analyse your Github repositories regarding the used programming languages.
 
 ## How to use this (will be extended in the future)
 
