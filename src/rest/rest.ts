@@ -35,7 +35,6 @@ export default async function restinfo(
 
 			views += trafficinfo.data.uniques;
 		} catch (e) {
-			// console.log(e);
 			console.info(
 				`REST request for views for ${reponame} failed. This is nothing to worry about.`
 			);
@@ -53,7 +52,6 @@ export default async function restinfo(
 				}
 			);
 
-			// console.log(changesinfo.data);
 			changesinfo.data.forEach((contributor: any) => {
 				if (contributor.author.login == username) {
 					contributor.weeks.forEach((week: any) => {
@@ -63,9 +61,8 @@ export default async function restinfo(
 				}
 			});
 		} catch (e) {
-			// console.log(e);
 			console.info(
-				`REST request for changes for ${reponame} failed. This is nothing to worry about.`
+				`REST request for changes for ${reponame} failed. This is nothing to worry about. There are just no recent changes to this repository`
 			);
 		}
 	}

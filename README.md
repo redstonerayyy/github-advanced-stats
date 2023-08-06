@@ -1,28 +1,34 @@
-# Github Language Stats
+# Github Advanced Stats
 
-Using this dependency free NodeJS project you can analyse your Github repositories regarding the used programming languages.
-It works by cloning all your repositories and then analysing each file.
-Because of this, it doesn't use the Github API, but cloning your repositories can take time, especially if they are large.
+Yet another stats generator for github. Inspired by [jstrieb/github-stats](https://github.com/jstrieb/github-stats) but adjusted so languages are displayed more accurately.
+This works by cloning all specified repositories and then analyzing them.
+The Configuration is specified in `config.json`.
 It can be run locally with NodeJS or on Github Actions.
 
-## How to use this (will be extended in the future)
+![](https://raw.githubusercontent.com/Redstonerayy/github-advanced-stats/master/output/userinfo.svg#gh-light-mode-only)
+![](https://raw.githubusercontent.com/Redstonerayy/github-advanced-stats/master/output/userinfo.svg#gh-dark-mode-only)
+![](https://raw.githubusercontent.com/Redstonerayy/github-advanced-stats/master/output/languages.svg#gh-light-mode-only)
+![](https://raw.githubusercontent.com/Redstonerayy/github-advanced-stats/master/output/languages.svg#gh-dark-mode-only)
+
+## How to use this
 
 1. Be aware of the [limitations](#limitations)
 2. Fork this repository and edit the config
+3. Add a Github Access Token (`public_repo, read:project, read:user, repo:status, user:email`) as the enviroment variable `GHTOKEN` (via secret)
+4. Start a build in Github Actions and let it complete
+5. Add this to your README
+
+```
+![](https://raw.githubusercontent.com/<your username>/github-advanced-stats/master/output/userinfo.svg#gh-light-mode-only)
+![](https://raw.githubusercontent.com/<your username>/github-advanced-stats/master/output/userinfo.svg#gh-dark-mode-only)
+![](https://raw.githubusercontent.com/<your username>/github-advanced-stats/master/output/languages.svg#gh-light-mode-only)
+![](https://raw.githubusercontent.com/<your username>/github-advanced-stats/master/output/languages.svg#gh-dark-mode-only)
+```
 
 ## Limitations
 
--   currently private repos are not supported
 -   may not work with large repositories
 -   not every language (but every language can be added)
-
-## Possible Improvements
-
--   add more languages
--   make colors for languages better
--   add support for private repos
--   more in-depth code analysis (therefore more stats)
--   more config options (e.g. add languages in config)
 
 ## Contributing
 

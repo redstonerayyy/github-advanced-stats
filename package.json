@@ -1,7 +1,7 @@
 {
-	"name": "repo-lang-crawler",
+	"name": "github-stats-generator",
 	"version": "1.0.0",
-	"description": "Get the languages of all publi repositories of an user",
+	"description": "Get user info and display in a nice format. Focus and language display and easy configuration and extensibility.",
 	"main": "src/main.js",
 	"scripts": {
 		"dev": "yarn tsc --watch",
