@@ -128,19 +128,19 @@ div.ellipsis {
 <span class="progress">
 
         <span style="background-color: #0f206d; 
-        width: 40.56%;" 
+        width: 40.54%;" 
         class="progress-item"></span>
         
         <span style="background-color: #3178C6; 
-        width: 24.59%;" 
+        width: 24.63%;" 
         class="progress-item"></span>
         
         <span style="background-color: #FFD73D; 
-        width: 16.90%;" 
+        width: 16.89%;" 
         class="progress-item"></span>
         
         <span style="background-color: #264EE4; 
-        width: 8.36%;" 
+        width: 8.35%;" 
         class="progress-item"></span>
         
         <span style="background-color: #000000; 
@@ -170,7 +170,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">C++</span>
-        <span class="percent">40.56%</span>
+        <span class="percent">40.54%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -178,7 +178,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">TypeScript</span>
-        <span class="percent">24.59%</span>
+        <span class="percent">24.63%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -186,7 +186,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">JavaScript</span>
-        <span class="percent">16.90%</span>
+        <span class="percent">16.89%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
@@ -194,7 +194,7 @@ div.ellipsis {
         viewBox="0 0 16 16" width="16" height="16"><path
         fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
         <span class="lang">CSS</span>
-        <span class="percent">8.36%</span>
+        <span class="percent">8.35%</span>
         </li>
         
         <li style="animation-delay: 0ms;">
