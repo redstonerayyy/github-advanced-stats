@@ -176,13 +176,15 @@ export default async function analysefolders(
 	/*------------ remove languages which are configured to be ignored ------------*/
 	// remove also their linecounts, brackets usw. so the percentages don't get messed up
 	for (const lang of ignored_languages) {
-		combinedrepostats.linecount -= statsbylanguage[lang].linecount;
-		combinedrepostats.curlybrackets -= statsbylanguage[lang].curlybrackets;
-		combinedrepostats.squarebrackets -=
-			statsbylanguage[lang].squarebrackets;
-		combinedrepostats.roundbrackets -= statsbylanguage[lang].roundbrackets;
-		combinedrepostats.semicolons -= statsbylanguage[lang].semicolons;
-		delete statsbylanguage[lang];
+        if(statsbylanguage[lang] !== undefined){
+            combinedrepostats.linecount -= statsbylanguage[lang].linecount;
+            combinedrepostats.curlybrackets -= statsbylanguage[lang].curlybrackets;
+            combinedrepostats.squarebrackets -=
+                statsbylanguage[lang].squarebrackets;
+            combinedrepostats.roundbrackets -= statsbylanguage[lang].roundbrackets;
+            combinedrepostats.semicolons -= statsbylanguage[lang].semicolons;
+            delete statsbylanguage[lang];
+        }
 	}
 
 	/*------------ return final stats ------------*/
